@@ -24,7 +24,7 @@ Para ejecutar esta aplicación localmente, necesitarás:
 
 Sigue estos pasos para tener la aplicación funcionando en tu máquina local.
 
-### 1. Obtén una Clave de API de Gemini
+### 2. Configura tu Clave de API
 
 Esta aplicación utiliza la API de Google Gemini para sus funciones de IA.
 
@@ -33,40 +33,51 @@ Esta aplicación utiliza la API de Google Gemini para sus funciones de IA.
 3.  Haz clic en **"Create API key"** para generar una nueva clave.
 4.  Copia la clave. La necesitarás en el siguiente paso.
 
-### 2. Configura tu Clave de API
+### 3. Configuración de Variables de Entorno (¡Importante!)
 
-1.  Abre la carpeta del proyecto en Visual Studio Code.
-2.  En la raíz del proyecto (al mismo nivel que `index.html`), crea un nuevo archivo llamado `config.js`.
-3.  Pega el siguiente código en el archivo `config.js`:
+Para proteger tu clave de API y otras configuraciones sensibles, utilizamos variables de entorno.
 
-    ```javascript
-    window.APP_CONFIG = {
-      API_KEY: "PEGA_AQUÍ_TU_CLAVE_DE_API_DE_GEMINI"
-    };
-    ```
-
-4.  Reemplaza `"PEGA_AQUÍ_TU_CLAVE_DE_API_DE_GEMINI"` con la clave que copiaste de Google AI Studio. **Asegúrate de mantener las comillas.**
-
-### 3. Evita Subir tu Clave a Git (¡Importante!)
-
-Para proteger tu clave de API, debemos asegurarnos de que no se suba a ningún repositorio de código.
-
-1.  Crea un archivo llamado `.gitignore` en la raíz del proyecto (si no existe).
-2.  Añade la siguiente línea al archivo `.gitignore`:
+1.  En la raíz del proyecto, crea un nuevo archivo llamado `.env` (si no existe).
+2.  Añade la siguiente línea al archivo `.env`:
 
     ```
-    config.js
+    VITE_GOOGLE_API_KEY="PEGA_AQUÍ_TU_CLAVE_DE_API_DE_GEMINI"
     ```
 
-    Esto le indicará a Git que ignore el archivo `config.js`, protegiendo tu clave.
+3.  Reemplaza `PEGA_AQUÍ_TU_CLAVE_DE_API_DE_GEMINI` con la clave que copiaste de Google AI Studio. **Asegúrate de mantener las comillas.**
+4.  El archivo `.env` ya está incluido en `.gitignore`, por lo que no se subirá accidentalmente a tu repositorio.
 
 ### 4. Ejecuta la Aplicación
 
-1.  En el explorador de archivos de VS Code, haz clic derecho sobre el archivo `index.html`.
-2.  Selecciona la opción **"Open with Live Server"**.
-3.  La aplicación se abrirá automáticamente en tu navegador web predeterminado (generalmente en una URL como `http://127.0.0.1:5500`).
+Sigue estos pasos para tener la aplicación funcionando en tu máquina local.
+
+1.  **Instala las dependencias:**
+    ```bash
+    pnpm install
+    ```
+2.  **Inicia el servidor backend:**
+    ```bash
+    pnpm run dev:server
+    ```
+    Esto iniciará el servidor en `http://localhost:3001`.
+3.  **Inicia la aplicación frontend:**
+    ```bash
+    pnpm run dev
+    ```
+    Esto abrirá la aplicación en tu navegador web predeterminado (generalmente en una URL como `http://localhost:5173`).
 
 ¡Y eso es todo! La aplicación ahora es totalmente funcional en tu entorno local.
+
+### 5. Scripts de Desarrollo
+
+Puedes usar los siguientes scripts para el desarrollo:
+
+*   `pnpm run dev`: Inicia el servidor de desarrollo frontend.
+*   `pnpm run build`: Compila la aplicación para producción.
+*   `pnpm run dev:server`: Inicia el servidor backend.
+*   `pnpm run preview`: Previsualiza la compilación de producción.
+*   `pnpm run lint`: Ejecuta ESLint para verificar el código.
+*   `pnpm run lint:fix`: Ejecuta ESLint y corrige automáticamente los problemas.
 
 ## 🎤 Solución de Problemas
 
