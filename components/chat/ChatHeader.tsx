@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react"; // Importar memo
 import { XIcon } from "../ui/icons"; // Importar XIcon
 
 interface ChatHeaderProps {
@@ -7,7 +7,7 @@ interface ChatHeaderProps {
   onClearChat: () => void; // Nuevo prop
 }
 
-export const ChatHeader: React.FC<ChatHeaderProps> = ({ title, subtitle, onClearChat }) => {
+export const ChatHeader = memo<ChatHeaderProps>(({ title, subtitle, onClearChat }) => { // Envolver en memo
   return (
     <div className="flex items-center justify-between p-4 border-b border-primary-light"> {/* Añadido justify-between */}
       <div>

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { memo } from "react"; // Importar memo
 import StudioGuide from "../ui/StudioGuide";
-import { LoadingIcon, SendIcon } from "../ui/icons"; // Agrupadas y ordenadas
+import { LoadingIcon, SendIcon } from "../ui/icons";
 import { useChatbot } from "../../hooks/useChatbot";
 import { CHAT_CONSTANTS } from "../../constants/chat";
 import { ChatHeader } from "../chat/ChatHeader";
@@ -8,7 +8,7 @@ import { ChatMessage } from "../chat/ChatMessage";
 import { ChatInput } from "../chat/ChatInput";
 import { ErrorMessage } from "../chat/ErrorMessage"; // Nueva importación
 
-const Chatbot: React.FC = () => {
+const Chatbot: React.FC = memo(() => { // Envolver en memo
   const {
     messages,
     input,

@@ -1,4 +1,4 @@
-import React, { useState } from "react"; // Importar useState
+import React, { useState, memo } from "react"; // Importar memo
 import { ChatMessage as ChatMessageType } from "../../types";
 import { CopyIcon } from "../ui/icons"; // Importar CopyIcon
 
@@ -7,7 +7,7 @@ interface ChatMessageProps {
   isLastMessage: boolean; // Para el scroll
 }
 
-export const ChatMessage: React.FC<ChatMessageProps> = ({ message, isLastMessage }) => {
+export const ChatMessage = memo(({ message, isLastMessage }) => { // Envolver en memo
   const isUser = message.sender === "user";
   const [copied, setCopied] = useState(false); // Estado para el feedback de copiado
 
