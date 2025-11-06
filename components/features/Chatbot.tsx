@@ -5,7 +5,8 @@ import { useChatbot } from "../../hooks/useChatbot";
 import { CHAT_CONSTANTS } from "../../constants/chat";
 import { ChatHeader, ChatMessage, ChatInput, ErrorMessage } from "../chat"; // Importación desde el barrel file
 
-const Chatbot: React.FC = memo(() => { // Envolver en memo
+const Chatbot: React.FC = memo(() => {
+  // Envolver en memo
   const {
     messages,
     input,
@@ -70,7 +71,8 @@ const Chatbot: React.FC = memo(() => { // Envolver en memo
               </div>
             </div>
           )}
-          {error && <ErrorMessage message={error} />} {/* Mostrar ErrorMessage si hay error */}
+          {error && <ErrorMessage message={error} />}{" "}
+          {/* Mostrar ErrorMessage si hay error */}
           <div ref={messagesEndRef} />
         </div>
         <ChatInput // Usar el nuevo componente ChatInput
@@ -83,6 +85,6 @@ const Chatbot: React.FC = memo(() => { // Envolver en memo
       </div>
     </div>
   );
-};
+});
 
 export default Chatbot;
