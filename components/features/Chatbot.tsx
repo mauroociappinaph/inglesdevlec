@@ -13,7 +13,8 @@ const Chatbot: React.FC = () => {
     setInput,
     handleSend,
     handleKeyPress,
-  } = useChatbot(); // Usar el hook
+    clearChat, // Obtener clearChat del hook
+  } = useChatbot();
 
   return (
     <div className="flex flex-col h-full">
@@ -44,9 +45,10 @@ const Chatbot: React.FC = () => {
         </div>
       </StudioGuide>
       <div className="flex flex-col flex-1 h-full bg-primary-medium rounded-xl border border-primary-light shadow-2xl">
-        <ChatHeader // Usar el nuevo componente ChatHeader
+        <ChatHeader
           title="AI Chatbot"
           subtitle="Practice real-world tech conversations"
+          onClearChat={clearChat} // Pasar clearChat al componente ChatHeader
         />
         <div className="flex-1 p-6 overflow-y-auto space-y-6">
           {messages.map((msg, index) => (

@@ -11,6 +11,7 @@ interface UseChatbotReturn {
   setInput: (value: string) => void;
   handleSend: () => Promise<void>;
   handleKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  clearChat: () => void; // Nueva función
 }
 
 export const useChatbot = (): UseChatbotReturn => {
@@ -65,6 +66,12 @@ export const useChatbot = (): UseChatbotReturn => {
     }
   }, [handleSend]);
 
+  const clearChat = useCallback(() => { // Nueva función
+    setMessages([CHAT_CONSTANTS.INITIAL_MESSAGE]);
+    setInput("");
+    setIsLoading(false);
+  }, []);
+
   return {
     messages,
     input,
@@ -73,5 +80,5 @@ export const useChatbot = (): UseChatbotReturn => {
     setInput,
     handleSend,
     handleKeyPress,
+    clearChat, // Exportar la nueva función
   };
-};
