@@ -1,0 +1,3 @@
+window.APP_CONFIG = {
+  API_KEY: "AIzaSyBW2CuH3Yxj0qz81Dg4dCE0SVFKd1p6gPI",
+};
