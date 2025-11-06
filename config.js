@@ -1,3 +1,3 @@
 window.APP_CONFIG = {
-  API_KEY: "", // La clave de API de Google ha sido eliminada por seguridad.
+  API_KEY: import.meta.env.VITE_GOOGLE_API_KEY,
 };
