@@ -1,7 +1,7 @@
 import React from "react";
 import { SendIcon, LoadingIcon } from "../ui/icons/index";
 import StudioGuide from "../ui/StudioGuide";
-import { ChatMessage } from "../chat/ChatMessage"; // Importar el nuevo componente ChatMessage
+import { ChatInput } from "../chat/ChatInput"; // Importar el nuevo componente ChatInput // Importar el nuevo componente ChatMessage
 import { CHAT_CONSTANTS } from "../../constants/chat"; // Importar constantes
 
 const Chatbot: React.FC = () => {
@@ -70,26 +70,13 @@ const Chatbot: React.FC = () => {
           )}
           <div ref={messagesEndRef} />
         </div>
-        <div className="p-4 border-t border-primary-light bg-primary-medium rounded-b-xl">
-          <div className="flex items-center bg-primary-dark rounded-lg p-2">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder={CHAT_CONSTANTS.PLACEHOLDERS.INPUT} // Usar placeholder de constantes
-              className="flex-1 bg-transparent text-light-text placeholder-gray-500 focus:outline-none px-2"
-              disabled={isLoading}
-            />
-            <button
-              onClick={handleSend}
-              disabled={isLoading || !input.trim()}
-              className="p-2 rounded-md bg-accent-pink text-white disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors"
-            >
-              <SendIcon />
-            </button>
-          </div>
-        </div>
+        <ChatInput // Usar el nuevo componente ChatInput
+          input={input}
+          isLoading={isLoading}
+          onInputChange={setInput}
+          onSendMessage={handleSend}
+          onKeyPress={handleKeyPress}
+        />
       </div>
     </div>
   );
