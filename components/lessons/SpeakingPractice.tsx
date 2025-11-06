@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from 'react';
 // FIX: Corrected import path for geminiService.
 import { feedbackService } from '../../backend/services';
 // FIX: Corrected the import path for icons.
-import { MicIcon, StopPlaybackIcon, SparklesIcon, LoadingIcon } from '../icons/index';
+import { MicIcon, StopPlaybackIcon, SparklesIcon, LoadingIcon } from '../ui/icons/index';
 import { SpeechRecognition } from '../../types';
 
 interface SpeakingPracticeProps {

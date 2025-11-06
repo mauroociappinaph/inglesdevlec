@@ -2,7 +2,7 @@
 import React from 'react';
 import LessonSection from '../LessonSection';
 // FIX: Corrected the import path for icons.
-import { ReadingIcon } from '../icons/index';
+import { ReadingIcon } from '../ui/icons/index';
 
 interface IntroductionProps {
   children: React.ReactNode;

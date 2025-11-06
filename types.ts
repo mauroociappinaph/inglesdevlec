@@ -1,4 +1,3 @@
-export type Section = 'dashboard' | 'study-guide' | 'chatbot' | 'documentation' | 'code-editor' | 'conversation' | 'debate' | 'interview';
 
 export interface ChatMessage {
   sender: 'user' | 'bot';

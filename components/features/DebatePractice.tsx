@@ -3,7 +3,7 @@ import { SparklesIcon, LoadingIcon, LightbulbIcon, CheckCircleIcon, XCircleIcon,
 import { contentService, feedbackService } from '../../backend/services';
 import { DebateFeedback, ToneExample } from '../../types';
 import StudioGuide from '../ui/StudioGuide';
-import PhraseCard from '../ui/lessons/PhraseCard';
+import PhraseCard from '../lessons/PhraseCard';
 
 type CEFRLevel = 'B1' | 'B2' | 'C1';
 

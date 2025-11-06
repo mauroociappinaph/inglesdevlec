@@ -1,7 +1,7 @@
 
 
 import React, { useState, useRef, useEffect } from 'react';
-import { MicIcon, LoadingIcon } from '../icons/index';
+import { MicIcon, LoadingIcon } from '../ui/icons/index';
 // FIX: getPronunciationFeedback is not exported directly. Types should come from types.ts.
 // FIX: Corrected import path for geminiService.
 import { feedbackService } from '../../backend/services';

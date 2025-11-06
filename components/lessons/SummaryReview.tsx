@@ -2,7 +2,7 @@
 import React from 'react';
 import LessonSection from '../LessonSection';
 // FIX: Corrected the import path for icons.
-import { ReviewIcon } from '../icons/index';
+import { ReviewIcon } from '../ui/icons/index';
 
 interface SummaryReviewProps {
     points: string[];

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { LessonData, LessonId } from '../../types';
 import { lessons } from '../../data'; // Import centralized lesson data
-import LessonPage from '../ui/lessons/LessonPage'; // Import the generic lesson page renderer
+import LessonPage from '../lessons/LessonPage'; // Import the generic lesson page renderer
 import { 
     GreetingsIcon, InfoIcon, WorkIcon, DebateIcon, GuideIcon, PlanningIcon, 
     DescribingIcon, RoutineIcon, PreferencesIcon, HandshakeIcon, StudiesIcon,

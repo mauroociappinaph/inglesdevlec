@@ -4,7 +4,7 @@ import LessonLayout from './LessonLayout';
 import Introduction from './Introduction';
 import LessonSection from '../LessonSection';
 // FIX: Corrected the import path for icons.
-import { GrammarIcon, VocabIcon } from '../icons/index';
+import { GrammarIcon, VocabIcon } from '../ui/icons/index';
 import { GrammarCard, QuickCheck } from './GrammarComponents';
 import KeyPhrases from './KeyPhrases';
 import VocabularyTable from './VocabularyTable';
@@ -72,7 +72,7 @@ const LessonPage: React.FC<LessonPageProps> = ({ lesson, onBack }) => {
             <ListeningPractice
                 dialogueTurns={lesson.listening.dialogueTurns}
                 correctAnswers={lesson.listening.correctAnswers}
-                dialogue={<div dangerouslySetInnerHTML={{ __html: lesson.listening.dialogue }} />}
+                dialogue={lesson.listening.dialogue}
             />
         </LessonSection>
       )}

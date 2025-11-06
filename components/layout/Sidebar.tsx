@@ -1,34 +1,35 @@
 
 import React from 'react';
-import { Section } from '../../types';
+import { Link, useLocation } from 'react-router-dom';
 import { 
   DashboardIcon, ChatIcon, DocsIcon, CodeIcon, MicIcon, DebateIcon, BriefcaseIcon, GuideIcon,
   ChevronDoubleLeftIcon,
+  PuzzleIcon,
   XIcon
 } from '../ui/icons/index';
 import { useAppStore } from '../../store';
 
 const Sidebar: React.FC = () => {
   const { 
-    activeSection, 
-    setActiveSection, 
     isSidebarCollapsed, 
     toggleSidebarCollapsed,
     isMobileSidebarOpen,
     setMobileSidebarOpen
   } = useAppStore();
+  const location = useLocation();
 
   const isExpanded = !isSidebarCollapsed;
 
-  const navItems: { id: Section; label: string; icon: React.ReactElement }[] = [
-    { id: 'dashboard', label: 'Dashboard', icon: <DashboardIcon /> },
-    { id: 'study-guide', label: 'Study Guide', icon: <GuideIcon /> },
-    { id: 'chatbot', label: 'AI Chatbot', icon: <ChatIcon /> },
-    { id: 'documentation', label: 'Docs Analyzer', icon: <DocsIcon /> },
-    { id: 'code-editor', label: 'Code Editor', icon: <CodeIcon /> },
-    { id: 'conversation', label: 'Conversation', icon: <MicIcon /> },
-    { id: 'debate', label: 'Debate Practice', icon: <DebateIcon /> },
-    { id: 'interview', label: 'Interview Practice', icon: <BriefcaseIcon /> },
+  const navItems = [
+    { id: 'dashboard', path: '/dashboard', label: 'Dashboard', icon: <DashboardIcon /> },
+    { id: 'study-guide', path: '/study-guide', label: 'Study Guide', icon: <GuideIcon /> },
+    { id: 'ai-tutor', path: '/ai-tutor', label: 'AI Tutor', icon: <PuzzleIcon /> },
+    { id: 'chatbot', path: '/chatbot', label: 'AI Chatbot', icon: <ChatIcon /> },
+    { id: 'documentation', path: '/documentation', label: 'Docs Analyzer', icon: <DocsIcon /> },
+    { id: 'code-editor', path: '/code-editor', label: 'Code Editor', icon: <CodeIcon /> },
+    { id: 'conversation', path: '/conversation', label: 'Conversation', icon: <MicIcon /> },
+    { id: 'debate', path: '/debate', label: 'Debate Practice', icon: <DebateIcon /> },
+    { id: 'interview', path: '/interview', label: 'Interview Practice', icon: <BriefcaseIcon /> },
   ];
 
   const sidebarClasses = `
@@ -58,13 +59,11 @@ const Sidebar: React.FC = () => {
         <ul className="space-y-1">
           {navItems.map((item) => (
             <li key={item.id} className="px-2 md:px-4">
-              <button
-                onClick={() => {
-                  setActiveSection(item.id);
-                  setMobileSidebarOpen(false); // Close on selection
-                }}
+              <Link
+                to={item.path}
+                onClick={() => setMobileSidebarOpen(false)} // Close on selection
                 className={`flex items-center w-full p-3 my-1 rounded-lg transition-colors duration-200 ${!isSidebarCollapsed ? '' : 'md:justify-center'} ${
-                  activeSection === item.id
+                  location.pathname === item.path
                     ? 'bg-accent-yellow text-dark-text'
                     : 'hover:bg-primary-light text-light-text'
                 }`}
@@ -72,7 +71,7 @@ const Sidebar: React.FC = () => {
               >
                 <div className="flex-shrink-0">{item.icon}</div>
                 <span className={`ml-4 font-medium whitespace-nowrap ${isSidebarCollapsed ? 'md:hidden' : ''}`}>{item.label}</span>
-              </button>
+              </Link>
             </li>
           ))}
         </ul>

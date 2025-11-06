@@ -89,8 +89,17 @@ const PracticeZone: React.FC = () => {
         if (!answer.trim()) return;
         setIsLoading('feedback');
         setFeedback('');
-        // FIX: Use feedbackService for getInterviewFeedback.
-        const aiFeedback = await feedbackService.getInterviewFeedback(question, answer);
+        const response = await fetch('http://localhost:3001/api/feedback/interview', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ question, answer }),
+        });
+        if (!response.ok) {
+            throw new Error('Failed to get interview feedback');
+        }
+        const aiFeedback = await response.json();
         setFeedback(aiFeedback);
         setIsLoading(null);
     };

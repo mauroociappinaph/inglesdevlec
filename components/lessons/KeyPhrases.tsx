@@ -1,7 +1,7 @@
 import React from 'react';
 import LessonSection from '../LessonSection';
 // FIX: Corrected the import path for icons.
-import { VocabIcon } from '../icons/index';
+import { VocabIcon } from '../ui/icons/index';
 import { KeyPhraseData } from '../../types';
 import PhraseCard from './PhraseCard';
 

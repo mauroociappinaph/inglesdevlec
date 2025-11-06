@@ -1,11 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
 // FIX: Corrected the import path for icons.
-import { SoundIcon, StopPlaybackIcon } from '../icons/index';
+import { SoundIcon, StopPlaybackIcon } from '../ui/icons/index';
 
 // FIX: The prop interface is updated to accept 'dialogueTurns' and 'fullDialogue' is constructed internally.
 interface ListeningPracticeProps {
-  dialogue: React.ReactNode; // The text with placeholders
+  dialogue: string; // The text with placeholders
   dialogueTurns: { speaker: string; line: string; }[];
   correctAnswers: string[];
 }
@@ -40,13 +40,16 @@ const ListeningPractice: React.FC<ListeningPracticeProps> = ({ dialogue, dialogu
             window.speechSynthesis.cancel();
             setIsListening(false);
         } else {
-            const fullDialogue = dialogueTurns.map(turn => `${turn.speaker}: ${turn.line}`).join(' ');
-            const utterance = new SpeechSynthesisUtterance(fullDialogue);
-            utterance.lang = 'en-US';
-            utterance.rate = 0.8;
-            utterance.onend = () => setIsListening(false);
-            window.speechSynthesis.speak(utterance);
             setIsListening(true);
+            dialogueTurns.forEach((turn, index) => {
+                const utterance = new SpeechSynthesisUtterance(`${turn.speaker}: ${turn.line}`);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.8;
+                if (index === dialogueTurns.length - 1) {
+                    utterance.onend = () => setIsListening(false);
+                }
+                window.speechSynthesis.speak(utterance);
+            });
         }
     };
 
@@ -85,8 +88,6 @@ const ListeningPractice: React.FC<ListeningPracticeProps> = ({ dialogue, dialogu
         ));
     };
 
-    // FIX: Safely access props to handle both string-based and element-based dialogue.
-    const dialogueHtml = (dialogue as any)?.props?.dangerouslySetInnerHTML?.__html;
 
     return (
         <div>
@@ -101,7 +102,7 @@ const ListeningPractice: React.FC<ListeningPracticeProps> = ({ dialogue, dialogu
                 </button>
             </div>
             <div className="p-4 bg-primary-dark/50 my-2 rounded-md border border-primary-light text-gray-300 space-y-2">
-                 {dialogueHtml ? renderDialogueFromString(dialogueHtml) : dialogue}
+                 {renderDialogueFromString(dialogue)}
             </div>
             <button onClick={handleCheckAnswers} className="px-4 py-2 bg-accent-yellow hover:bg-yellow-400 text-dark-text font-semibold rounded-md text-sm">
                 Check Answers

@@ -8,41 +8,19 @@ import ConversationPractice from './components/features/ConversationPractice';
 import DebatePractice from './components/features/DebatePractice';
 import InterviewPractice from './components/features/InterviewPractice';
 import StudyGuideHub from './components/features/StudyGuideSection';
+import MultiAgentTutor from './components/features/MultiAgentTutor';
 import GlobalChatbot from './components/layout/GlobalChatbot';
 import { useAppStore } from './store';
+import { Routes, Route } from 'react-router-dom';
 import { HamburgerIcon } from './components/ui/icons/HamburgerIcon';
 
 const App: React.FC = () => {
   const { 
-    activeSection, 
     isSidebarCollapsed, 
     isMobileSidebarOpen, 
     setMobileSidebarOpen 
   } = useAppStore();
 
-
-  const renderSection = () => {
-    switch (activeSection) {
-      case 'dashboard':
-        return <Dashboard />;
-      case 'study-guide':
-        return <StudyGuideHub />;
-      case 'chatbot':
-        return <Chatbot />;
-      case 'documentation':
-        return <DocumentationAnalyzer />;
-      case 'code-editor':
-        return <CodeEditor />;
-      case 'conversation':
-        return <ConversationPractice />;
-      case 'debate':
-        return <DebatePractice />;
-      case 'interview':
-        return <InterviewPractice />;
-      default:
-        return <Dashboard />;
-    }
-  };
 
   return (
     <div className="h-screen bg-primary-dark text-light-text font-sans">
@@ -75,7 +53,18 @@ const App: React.FC = () => {
         </header>
         
         <main className="flex-1 p-6 sm:p-8 md:p-10 overflow-y-auto">
-          {renderSection()}
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/study-guide" element={<StudyGuideHub />} />
+            <Route path="/ai-tutor" element={<MultiAgentTutor />} />
+            <Route path="/chatbot" element={<Chatbot />} />
+            <Route path="/documentation" element={<DocumentationAnalyzer />} />
+            <Route path="/code-editor" element={<CodeEditor />} />
+            <Route path="/conversation" element={<ConversationPractice />} />
+            <Route path="/debate" element={<DebatePractice />} />
+            <Route path="/interview" element={<InterviewPractice />} />
+          </Routes>
         </main>
       </div>
 

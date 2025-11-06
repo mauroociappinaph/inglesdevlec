@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { quizService } from '../../backend/services';
+
 import { LessonData, QuizQuestion } from '../../types';
 import { LoadingIcon, XIcon, CheckCircleIcon, XCircleIcon, SparklesIcon } from '../ui/icons/index';
 
@@ -32,7 +32,17 @@ const ModuleQuiz: React.FC<ModuleQuizProps> = ({ moduleLessons, moduleTitle, onC
         setIsSubmitted(false);
         setUserAnswers({});
         try {
-            const quizData = await quizService.generateModuleQuiz(moduleLessons);
+            const response = await fetch('http://localhost:3001/api/quiz', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ moduleLessons }),
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch quiz');
+            }
+            const quizData = await response.json();
             setQuestions(quizData);
         } catch (err) {
             setError(err instanceof Error ? err.message : "An unknown error occurred.");

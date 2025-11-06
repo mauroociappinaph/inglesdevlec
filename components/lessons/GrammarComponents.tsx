@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 // FIX: Corrected the import path for icons.
-import { CheckCircleIcon, XCircleIcon } from '../icons/index';
+import { CheckCircleIcon, XCircleIcon } from '../ui/icons/index';
 
 type FeedbackState = 'correct' | 'incorrect' | null;
 
