@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
-import ModeSwitcher from './ModeSwitcher';
-import ConversationPractice from './ConversationPractice';
-import DebatePractice from './DebatePractice';
-import InterviewPractice from './InterviewPractice';
-import Chatbot from './Chatbot';
-import DocumentationAnalyzer from './DocumentationAnalyzer';
-import CodeEditor from './CodeEditor';
-import GrammarHelper from './GrammarHelper';
-import VocabularyBuilder from './VocabularyBuilder';
-import PronunciationCoach from './PronunciationCoach';
-// Import other modes here as they are created
+import { useState } from 'react';
+import {
+    Chatbot,
+    CodeEditor,
+    ConversationPractice,
+    DebatePractice,
+    DocumentationAnalyzer,
+    GrammarHelper,
+    InterviewPractice,
+    ModeSwitcher,
+    ModuleQuiz, // Aunque ModuleQuiz no se usa directamente aquí, se exporta en el barrel file
+    PronunciationCoach,
+    StudyGuideSection, // Aunque StudyGuideSection no se usa directamente aquí, se exporta en el barrel file
+    VocabularyBuilder,
+} from './'; // Importación desde el barrel file
 
 export type AgentMode = 'CONVERSATION_PARTNER' | 'DEBATE_PRACTICE' | 'INTERVIEW_PRACTICE' | 'AI_CHATBOT' | 'DOCUMENTATION_HELPER' | 'CODE_HELPER' | 'GRAMMAR_HELPER' | 'VOCABULARY_BUILDER' | 'PRONUNCIATION_COACH';
 
