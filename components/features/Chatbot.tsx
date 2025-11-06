@@ -1,7 +1,7 @@
 import React from "react";
 import { SendIcon, LoadingIcon } from "../ui/icons/index";
 import StudioGuide from "../ui/StudioGuide";
-import { useChatbot } from "../../hooks/useChatbot"; // Importar el hook
+import { ChatMessage } from "../chat/ChatMessage"; // Importar el nuevo componente ChatMessage
 import { CHAT_CONSTANTS } from "../../constants/chat"; // Importar constantes
 
 const Chatbot: React.FC = () => {
@@ -52,29 +52,11 @@ const Chatbot: React.FC = () => {
         </div>
         <div className="flex-1 p-6 overflow-y-auto space-y-6">
           {messages.map((msg, index) => (
-            <div
+            <ChatMessage
               key={index}
-              className={`flex items-end gap-3 ${
-                msg.sender === "user" ? "justify-end" : "justify-start"
-              }`}
-            >
-              {msg.sender === "bot" && (
-                <div className="w-8 h-8 rounded-full bg-accent-pink flex items-center justify-center text-white font-bold flex-shrink-0">
-                  AI
-                </div>
-              )}
-              <div
-                className={`max-w-md lg:max-w-xl px-4 py-3 rounded-2xl ${
-                  msg.sender === "user"
-                    ? "bg-accent-yellow text-dark-text rounded-br-none"
-                    : "bg-primary-light text-light-text rounded-bl-none"
-                }`}
-              >
-                <p className="text-sm" style={{ whiteSpace: "pre-wrap" }}>
-                  {msg.text}
-                </p>
-              </div>
-            </div>
+              message={msg}
+              isLastMessage={index === messages.length - 1}
+            />
           ))}
           {isLoading && (
             <div className="flex items-end gap-3 justify-start">
