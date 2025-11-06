@@ -1,6 +1,16 @@
-import React, { memo } from "react"; // Importar memo
-// ...
-export const ChatInput = memo(({ input, isLoading, onInputChange, onSendMessage, onKeyPress }) => { // Envolver en memo
+import React, { memo } from "react";
+import { SendIcon } from "../ui/icons";
+import { CHAT_CONSTANTS } from "../../constants/chat";
+
+interface ChatInputProps {
+  input: string;
+  isLoading: boolean;
+  onInputChange: (value: string) => void;
+  onSendMessage: () => void;
+  onKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+}
+
+export const ChatInput = memo<ChatInputProps>(({ input, isLoading, onInputChange, onSendMessage, onKeyPress }) => {
   return (
     <div className="p-4 border-t border-primary-light bg-primary-medium rounded-b-xl">
       <div className="flex items-center bg-primary-dark rounded-lg p-2">
