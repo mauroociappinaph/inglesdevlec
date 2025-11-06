@@ -26,7 +26,9 @@ export const ChatMessage = memo(({ message, isLastMessage }) => {
   };
 
   return (
-    <div className={`flex items-end gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}>
+    <div
+      className={`flex items-end gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}
+    >
       {!isUser && (
         <div className="w-8 h-8 rounded-full bg-accent-pink flex items-center justify-center text-white font-bold flex-shrink-0">
           AI
