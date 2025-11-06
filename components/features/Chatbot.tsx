@@ -1,19 +1,24 @@
 import React from "react";
-import { SendIcon, LoadingIcon } from "../ui/icons/index";
 import StudioGuide from "../ui/StudioGuide";
-import { ChatHeader } from "../chat/ChatHeader"; // Importar el nuevo componente ChatHeader // Importar el nuevo componente ChatInput // Importar el nuevo componente ChatMessage
-import { CHAT_CONSTANTS } from "../../constants/chat"; // Importar constantes
+import { LoadingIcon, SendIcon } from "../ui/icons"; // Agrupadas y ordenadas
+import { useChatbot } from "../../hooks/useChatbot";
+import { CHAT_CONSTANTS } from "../../constants/chat";
+import { ChatHeader } from "../chat/ChatHeader";
+import { ChatMessage } from "../chat/ChatMessage";
+import { ChatInput } from "../chat/ChatInput";
+import { ErrorMessage } from "../chat/ErrorMessage"; // Nueva importación
 
 const Chatbot: React.FC = () => {
   const {
     messages,
     input,
     isLoading,
+    error, // Obtener el estado de error del hook
     messagesEndRef,
     setInput,
     handleSend,
     handleKeyPress,
-    clearChat, // Obtener clearChat del hook
+    clearChat,
   } = useChatbot();
 
   return (
@@ -68,6 +73,7 @@ const Chatbot: React.FC = () => {
               </div>
             </div>
           )}
+          {error && <ErrorMessage message={error} />} {/* Mostrar ErrorMessage si hay error */}
           <div ref={messagesEndRef} />
         </div>
         <ChatInput // Usar el nuevo componente ChatInput

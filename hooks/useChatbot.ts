@@ -7,11 +7,12 @@ interface UseChatbotReturn {
   messages: ChatMessage[];
   input: string;
   isLoading: boolean;
+  error: string | null; // Nuevo estado de error
   messagesEndRef: React.RefObject<HTMLDivElement>;
   setInput: (value: string) => void;
   handleSend: () => Promise<void>;
   handleKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-  clearChat: () => void; // Nueva función
+  clearChat: () => void;
 }
 
 export const useChatbot = (): UseChatbotReturn => {
@@ -20,6 +21,7 @@ export const useChatbot = (): UseChatbotReturn => {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null); // Nuevo estado de error
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = useCallback(() => {
@@ -37,6 +39,7 @@ export const useChatbot = (): UseChatbotReturn => {
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
+    setError(null); // Limpiar errores anteriores al enviar un nuevo mensaje
 
     try {
       const systemInstruction = CHAT_CONSTANTS.SYSTEM_INSTRUCTION;
@@ -48,13 +51,10 @@ export const useChatbot = (): UseChatbotReturn => {
       );
       const botMessage: ChatMessage = { sender: "bot", text: botResponse };
       setMessages((prev) => [...prev, botMessage]);
-    } catch (error) {
-      console.error("Error sending message:", error);
-      const errorMessage: ChatMessage = {
-        sender: "bot",
-        text: "Sorry, I'm having trouble connecting. Please try again later.",
-      };
-      setMessages((prev) => [...prev, errorMessage]);
+    } catch (err) {
+      console.error("Error sending message:", err);
+      setError("Sorry, I'm having trouble connecting. Please try again later."); // Establecer el error
+      // No añadir un mensaje de error al chat aquí, se mostrará con el componente ErrorMessage
     } finally {
       setIsLoading(false);
     }
@@ -66,19 +66,21 @@ export const useChatbot = (): UseChatbotReturn => {
     }
   }, [handleSend]);
 
-  const clearChat = useCallback(() => { // Nueva función
+  const clearChat = useCallback(() => {
     setMessages([CHAT_CONSTANTS.INITIAL_MESSAGE]);
     setInput("");
     setIsLoading(false);
+    setError(null); // Limpiar el error al limpiar el chat
   }, []);
 
   return {
     messages,
     input,
     isLoading,
+    error, // Exportar el estado de error
     messagesEndRef,
     setInput,
     handleSend,
     handleKeyPress,
-    clearChat, // Exportar la nueva función
+    clearChat,
   };
