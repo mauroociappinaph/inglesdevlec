@@ -1,63 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
-import { ChatMessage } from "../../types";
-import { contentService } from "../../server/services/services";
+import React from "react";
 import { SendIcon, LoadingIcon } from "../ui/icons/index";
 import StudioGuide from "../ui/StudioGuide";
+import { useChatbot } from "../../hooks/useChatbot"; // Importar el hook
+import { CHAT_CONSTANTS } from "../../constants/chat"; // Importar constantes
 
 const Chatbot: React.FC = () => {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      sender: "bot",
-      text: "Hello! I'm your AI English assistant. Ask me anything about technical vocabulary, simulate an interview, or practice a code review.",
-    },
-  ]);
-  const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(scrollToBottom, [messages]);
-
-  const handleSend = async () => {
-    if (input.trim() === "" || isLoading) return;
-
-    const userMessage: ChatMessage = { sender: "user", text: input };
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
-    setIsLoading(true);
-
-    try {
-      const systemInstruction = `You are a helpful AI assistant for programmers learning technical English.
-      Your goal is to explain technical terms, phrasal verbs, and simulate professional conversations like interviews or code reviews.
-      Keep your responses concise, clear, and contextually relevant to a software development environment.`;
-
-      const botResponse = await contentService.sendMessage(
-        input,
-        systemInstruction,
-        "FAST"
-      );
-      const botMessage: ChatMessage = { sender: "bot", text: botResponse };
-      setMessages((prev) => [...prev, botMessage]);
-    } catch (error) {
-      console.error("Error sending message:", error);
-      const errorMessage: ChatMessage = {
-        sender: "bot",
-        text: "Sorry, I'm having trouble connecting. Please try again later.",
-      };
-      setMessages((prev) => [...prev, errorMessage]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleSend();
-    }
-  };
+  const {
+    messages,
+    input,
+    isLoading,
+    messagesEndRef,
+    setInput,
+    handleSend,
+    handleKeyPress,
+  } = useChatbot(); // Usar el hook
 
   return (
     <div className="flex flex-col h-full">
@@ -139,7 +95,7 @@ const Chatbot: React.FC = () => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Ask me to explain 'to refactor'..."
+              placeholder={CHAT_CONSTANTS.PLACEHOLDERS.INPUT} // Usar placeholder de constantes
               className="flex-1 bg-transparent text-light-text placeholder-gray-500 focus:outline-none px-2"
               disabled={isLoading}
             />
