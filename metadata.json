@@ -1,0 +1,7 @@
+{
+  "name": "Tech English Hub",
+  "description": "An educational app for programmers to improve their technical English from B1 to C2, combining theory, interactive practice, and AI-powered tools like a chatbot, documentation analyzer, and conversation simulator.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
