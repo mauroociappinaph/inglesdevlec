@@ -57,4 +57,5 @@ export * from './PastClockIcon';
 export * from './HamburgerIcon';
 export * from './ChevronDoubleLeftIcon';
 export * from './XIcon';
+export * from './CopyIcon'; // Nueva exportación
 export * from './ChevronDownIcon';

@@ -1,5 +1,6 @@
-import React from "react";
-import { ChatMessage as ChatMessageType } from "../../types"; // Renombrar para evitar conflicto
+import React, { useState } from "react"; // Importar useState
+import { ChatMessage as ChatMessageType } from "../../types";
+import { CopyIcon } from "../ui/icons"; // Importar CopyIcon
 
 interface ChatMessageProps {
   message: ChatMessageType;
@@ -8,6 +9,18 @@ interface ChatMessageProps {
 
 export const ChatMessage: React.FC<ChatMessageProps> = ({ message, isLastMessage }) => {
   const isUser = message.sender === "user";
+  const [copied, setCopied] = useState(false); // Estado para el feedback de copiado
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(message.text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000); // Resetear el estado después de 2 segundos
+    } catch (err) {
+      console.error("Failed to copy message: ", err);
+      // Podríamos añadir un toast o un mensaje de error al usuario aquí
+    }
+  };
 
   return (
     <div
@@ -21,7 +34,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message, isLastMessage
         </div>
       )}
       <div
-        className={`max-w-md lg:max-w-xl px-4 py-3 rounded-2xl ${
+        className={`group relative max-w-md lg:max-w-xl px-4 py-3 rounded-2xl ${
           isUser
             ? "bg-accent-yellow text-dark-text rounded-br-none"
             : "bg-primary-light text-light-text rounded-bl-none"
@@ -30,6 +43,24 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message, isLastMessage
         <p className="text-sm" style={{ whiteSpace: "pre-wrap" }}>
           {message.text}
         </p>
+        {!isUser && ( // Botón de copia solo para mensajes del bot
+          <button
+            onClick={handleCopy}
+            className={`absolute top-1 right-1 p-1 rounded-md bg-primary-dark/50 text-gray-400 hover:text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 ${
+              copied ? "opacity-100 !bg-green-600 text-white" : "" // Mostrar siempre si está copiado
+            }`}
+            aria-label="Copy message"
+            title="Copy message"
+          >
+            {copied ? (
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+            ) : (
+              <CopyIcon />
+            )}
+          </button>
+        )}
       </div>
       {isLastMessage && <div />} {/* Placeholder para el scroll, se manejará en el componente padre */}
     </div>
