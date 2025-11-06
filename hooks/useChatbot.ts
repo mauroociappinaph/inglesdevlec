@@ -3,6 +3,9 @@ import { ChatMessage } from "../types";
 import { contentService } from "../server/services/services";
 import { CHAT_CONSTANTS } from "../constants/chat";
 
+const CHAT_HISTORY_KEY = "chatbotHistory";
+const MAX_MESSAGES_TO_PERSIST = 50; // Límite de mensajes a guardar
+
 interface UseChatbotReturn {
   messages: ChatMessage[];
   input: string;
@@ -16,9 +19,26 @@ interface UseChatbotReturn {
 }
 
 export const useChatbot = (): UseChatbotReturn => {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    CHAT_CONSTANTS.INITIAL_MESSAGE,
-  ]);
+  const [messages, setMessages] = useState<ChatMessage[]>(() => {
+    // Cargar historial desde localStorage al inicializar
+    if (typeof window !== "undefined") {
+      const savedHistory = localStorage.getItem(CHAT_HISTORY_KEY);
+      if (savedHistory) {
+        try {
+          const parsedHistory: ChatMessage[] = JSON.parse(savedHistory);
+          // Asegurarse de que el primer mensaje sea el inicial del bot si el historial está vacío o corrupto
+          if (parsedHistory.length === 0 || parsedHistory[0].sender !== "bot") {
+            return [CHAT_CONSTANTS.INITIAL_MESSAGE];
+          }
+          return parsedHistory;
+        } catch (e) {
+          console.error("Failed to parse chat history from localStorage", e);
+          return [CHAT_CONSTANTS.INITIAL_MESSAGE];
+        }
+      }
+    }
+    return [CHAT_CONSTANTS.INITIAL_MESSAGE];
+  });
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null); // Nuevo estado de error
@@ -31,6 +51,14 @@ export const useChatbot = (): UseChatbotReturn => {
   useEffect(() => {
     scrollToBottom();
   }, [messages, scrollToBottom]);
+
+  // Guardar historial en localStorage cada vez que los mensajes cambian
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const historyToSave = messages.slice(Math.max(messages.length - MAX_MESSAGES_TO_PERSIST, 0));
+      localStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(historyToSave));
+    }
+  }, [messages]);
 
   const handleSend = useCallback(async () => {
     if (input.trim() === "" || isLoading) return;
