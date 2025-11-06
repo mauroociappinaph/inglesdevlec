@@ -1,7 +1,7 @@
 import React from "react";
 import { SendIcon, LoadingIcon } from "../ui/icons/index";
 import StudioGuide from "../ui/StudioGuide";
-import { ChatInput } from "../chat/ChatInput"; // Importar el nuevo componente ChatInput // Importar el nuevo componente ChatMessage
+import { ChatHeader } from "../chat/ChatHeader"; // Importar el nuevo componente ChatHeader // Importar el nuevo componente ChatInput // Importar el nuevo componente ChatMessage
 import { CHAT_CONSTANTS } from "../../constants/chat"; // Importar constantes
 
 const Chatbot: React.FC = () => {
@@ -44,12 +44,10 @@ const Chatbot: React.FC = () => {
         </div>
       </StudioGuide>
       <div className="flex flex-col flex-1 h-full bg-primary-medium rounded-xl border border-primary-light shadow-2xl">
-        <div className="p-4 border-b border-primary-light">
-          <h2 className="text-xl font-semibold text-white">AI Chatbot</h2>
-          <p className="text-sm text-gray-400">
-            Practice real-world tech conversations
-          </p>
-        </div>
+        <ChatHeader // Usar el nuevo componente ChatHeader
+          title="AI Chatbot"
+          subtitle="Practice real-world tech conversations"
+        />
         <div className="flex-1 p-6 overflow-y-auto space-y-6">
           {messages.map((msg, index) => (
             <ChatMessage
