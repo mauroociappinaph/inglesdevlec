@@ -1,21 +1,24 @@
-import React, { useState, memo } from "react"; // Importar memo
+import React, { useState, memo } from "react";
 import { ChatMessage as ChatMessageType } from "../../types";
-import { CopyIcon } from "../ui/icons"; // Importar CopyIcon
+import { CopyIcon } from "../ui/icons";
+import { Toast } from "../ui/Toast"; // Importar Toast
 
 interface ChatMessageProps {
   message: ChatMessageType;
-  isLastMessage: boolean; // Para el scroll
+  isLastMessage: boolean;
 }
 
-export const ChatMessage = memo(({ message, isLastMessage }) => { // Envolver en memo
+export const ChatMessage = memo(({ message, isLastMessage }) => {
   const isUser = message.sender === "user";
-  const [copied, setCopied] = useState(false); // Estado para el feedback de copiado
+  const [copied, setCopied] = useState(false);
+  const [showToast, setShowToast] = useState(false); // Nuevo estado para el toast
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(message.text);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000); // Resetear el estado después de 2 segundos
+      setShowToast(true); // Mostrar toast
+      setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error("Failed to copy message: ", err);
       // Podríamos añadir un toast o un mensaje de error al usuario aquí
@@ -28,7 +31,7 @@ export const ChatMessage = memo(({ message, isLastMessage }) => { // Envolver en
         isUser ? "justify-end" : "justify-start"
       }`}
     >
-      {!isUser && ( // Mostrar el avatar del bot solo si es un mensaje del bot
+      {!isUser && (
         <div className="w-8 h-8 rounded-full bg-accent-pink flex items-center justify-center text-white font-bold flex-shrink-0">
           AI
         </div>
@@ -43,11 +46,11 @@ export const ChatMessage = memo(({ message, isLastMessage }) => { // Envolver en
         <p className="text-sm" style={{ whiteSpace: "pre-wrap" }}>
           {message.text}
         </p>
-        {!isUser && ( // Botón de copia solo para mensajes del bot
+        {!isUser && (
           <button
             onClick={handleCopy}
             className={`absolute top-1 right-1 p-1 rounded-md bg-primary-dark/50 text-gray-400 hover:text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 ${
-              copied ? "opacity-100 !bg-green-600 text-white" : "" // Mostrar siempre si está copiado
+              copied ? "opacity-100 !bg-green-600 text-white" : ""
             }`}
             aria-label="Copy message"
             title="Copy message"
@@ -62,7 +65,13 @@ export const ChatMessage = memo(({ message, isLastMessage }) => { // Envolver en
           </button>
         )}
       </div>
-      {isLastMessage && <div />} {/* Placeholder para el scroll, se manejará en el componente padre */}
+      {isLastMessage && <div />}
+      {showToast && ( // Mostrar Toast si showToast es true
+        <Toast
+          message="Message copied!"
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </div>
   );
-};
+});
