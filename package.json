@@ -9,7 +9,9 @@
     "dev:server": "ts-node server/server.ts",
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx,js,jsx",
-    "lint:fix": "eslint . --ext ts,tsx,js,jsx --fix"
+    "lint:fix": "eslint . --ext ts,tsx,js,jsx --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,css}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,css}\""
   },
   "dependencies": {
     "@google/genai": "^1.28.0",
@@ -32,6 +34,7 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
+    "prettier": "^3.6.2",
     "ts-node": "^10.9.2",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
